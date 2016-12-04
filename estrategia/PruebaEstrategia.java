@@ -6,6 +6,7 @@
 package estrategia;
 
 import pesoLigero.*;
+import generadorEntradaSalida.*;
 
 /**
  *
@@ -14,30 +15,36 @@ import pesoLigero.*;
 public class PruebaEstrategia {
 
     static AutoParking auto;
+    static GenerarInOut generadorInOut;
+    static TargetInteger adaptadorNumero;
     
     public static void main(String[] args) {
         
-        int posFinalY = 0;
-        int posFinalX = 0;
-        
+        int posFinalY=0;
+        int posFinalX;
         auto = new AutoParking();
-        auto.setPosActualX(0);
+        int posActualY;
+        int posActualX;
+        generadorInOut = new GenerarInOut(new FabricaGrafico());
+        adaptadorNumero = new AdaptadorStringInteger();
+        generadorInOut.mostrar("Inserte la posicion donde desea estacionar");
+        posFinalX = adaptadorNumero.getInteger(generadorInOut.getCargador());
+        auto.setPosFinalX(posFinalX);
+        do{
+            generadorInOut.mostrar("Inserte la poscion actual del vehiculo");
+            auto.setPosActualX(adaptadorNumero.getInteger(generadorInOut.getCargador()));
+        }while(auto.getPosActualX()==posFinalX);
         auto.setPosActualY(posFinalY);
-        
-        int posActualY = auto.getPosActualY();
-        int posActualX = auto.getPosActualX();
-        
+        posActualY = auto.getPosActualY();
+        posActualX = auto.getPosActualX();
         if(posActualY==posFinalY){
             if(posActualX<posFinalX){
-                auto = new AutoParking(new ParqueoFrente(), posFinalX);
-                auto.parquear();
-            }else{ 
-                if(posActualX>posFinalX){
-                    auto = new AutoParking(new ParqueoCola(), posFinalX);
-                    auto.parquear();
-                }
+                auto.setMoverPark(new ParqueoFrente());
+            }else{
+                auto.setMoverPark(new ParqueoCola());
             }
         }
-    }
-    
+        auto.parquear();
+        generadorInOut.mostrar("La poscion actual del vehiculo es: "+auto.getPosActualX());
+    }   
 }

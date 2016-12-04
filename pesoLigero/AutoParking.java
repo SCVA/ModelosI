@@ -20,12 +20,6 @@ public class AutoParking extends Auto {
         estado = "parqueado";
     }
     
-    public AutoParking(MovmtoParqueo moverPark, int posFinalX){
-        estado = "parqueado";
-        this.posFinalX = posFinalX;
-        this.moverPark = moverPark;
-    }
-    
     public boolean pruebaFrenos(Freno freno) {
         this.freno = freno;
         return this.freno.frenar(estado);
@@ -37,6 +31,14 @@ public class AutoParking extends Auto {
         }while(posActualX!=posFinalX);
     }
 
+    public void setMoverPark(MovmtoParqueo moverPark) {
+        this.moverPark = moverPark;
+    }
+
+    public void setPosFinalX(int posFinalX) {
+        this.posFinalX = posFinalX;
+    }
+    
     @Override
     public void ejecutarEstado() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -5,6 +5,7 @@
  */
 package pesoLigero;
 
+import generadorEntradaSalida.*;
 /**
  *
  * @author SEBASTIAN
@@ -17,11 +18,17 @@ public class PruebaPesoLigero {
     static Auto autoPark;
     static boolean pruebaMecanica;
     static boolean pruebaHidraulica;
+    static GenerarInOut generadorInOut;
+    static TargetInteger adaptadorNumero;
     
     public static void main(String[] args) {
-        boolean modificar = true;
+        int modificar = 0;
         do{
             int opcion = 0;
+            generadorInOut = new GenerarInOut(new FabricaGrafico());
+            adaptadorNumero = new AdaptadorStringInteger();
+            generadorInOut.mostrar("Prueba de Frenos en: 1.Auto Encendido. 2.Auto Apagado. 3.Auto Parqueando.");
+            opcion = adaptadorNumero.getInteger(generadorInOut.getCargador());
             switch(opcion){
                 case 1:
                     autoOn = fabricaRapidaAuto.getAutoOn(autoOn);
@@ -30,19 +37,22 @@ public class PruebaPesoLigero {
                     break;
                 case 2:
                     autoOff = fabricaRapidaAuto.getAutoOff(autoOff);
-                    pruebaMecanica = autoOn.pruebaFrenos(new FrenoMecanico());
-                    pruebaHidraulica = autoOn.pruebaFrenos(new FrenoHidraulico());
+                    pruebaMecanica = autoOff.pruebaFrenos(new FrenoMecanico());
+                    pruebaHidraulica = autoOff.pruebaFrenos(new FrenoHidraulico());
                     break;
                 case 3:
                     autoPark = fabricaRapidaAuto.getAutoParking(autoPark);
-                    pruebaMecanica = autoOn.pruebaFrenos(new FrenoMecanico());
-                    pruebaHidraulica = autoOn.pruebaFrenos(new FrenoHidraulico());
+                    pruebaMecanica = autoPark.pruebaFrenos(new FrenoMecanico());
+                    pruebaHidraulica = autoPark.pruebaFrenos(new FrenoHidraulico());
                     break;
                 default:
                     break;
             }
-            modificar = false;
-        }while(modificar);
+            generadorInOut.mostrar("La Prueba Hidraulica: "+pruebaHidraulica);
+            generadorInOut.mostrar("La Prueba Mecanica: "+pruebaMecanica);
+            generadorInOut.mostrar("Para otra prueba presione 0, si no presione 1");
+            modificar = adaptadorNumero.getInteger(generadorInOut.getCargador());
+        }while(modificar == 0);
     }
     
 }

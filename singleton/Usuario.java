@@ -11,9 +11,16 @@ package singleton;
  */
 public class Usuario extends Thread{
     
+    AutoPrestado autoReposicion;
+    
     public void run(AutoPrestado autoReposicion, int tiempoPrestamo) throws InterruptedException {
         sleep(tiempoPrestamo);
+        this.autoReposicion = autoReposicion;
         autoReposicion.setEstadoLibre(true);
+    }
+    
+    public String obtenerNombreAuto(){
+        return autoReposicion.getNombre();
     }
     
 }

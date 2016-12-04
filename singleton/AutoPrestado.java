@@ -19,16 +19,17 @@ public class AutoPrestado extends Auto{
     private static int contadorAutos = 3; // Por politicas Empresariales
     private static int contadorUsados = 0;
     private static boolean estadoLibre;
+    private String nombre;
     
-    private AutoPrestado (){
+    private AutoPrestado (String nombre){
         this.estadoLibre = false;
+        this.nombre = nombre;
     }
     
     public synchronized static AutoPrestado getAutoPrestado() throws InterruptedException{
         for(int i=0;i<contadorAutos;i++){
             if(dimension(i)||i>=autos.size()){
-                autos.add(i, new AutoPrestado());
-                System.out.print(" - Nuevo Auto");
+                autos.add(i, new AutoPrestado("Auto "+(i+1)));
                 contadorUsados++;
                 return autos.get(i);
             }
@@ -40,10 +41,10 @@ public class AutoPrestado extends Auto{
                             return autos.get(j);
                         }
                     }
-                }
+                }   
             }
         }
-        return new AutoPrestado();
+        return new AutoPrestado("");
     }
     
     public static boolean dimension(int i){
@@ -83,4 +84,9 @@ public class AutoPrestado extends Auto{
     public Object clone() throws CloneNotSupportedException {
     	throw new CloneNotSupportedException("No aplicable"); 
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
 }
