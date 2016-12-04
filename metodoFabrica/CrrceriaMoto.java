@@ -11,4 +11,7 @@ package metodoFabrica;
  */
 public class CrrceriaMoto extends Carroceria {
     
+    public CrrceriaMoto(){
+        this.setTipo("Moto");
+    }
 }

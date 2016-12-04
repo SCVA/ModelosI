@@ -10,5 +10,9 @@ package metodoFabrica;
  * @author SEBASTIAN
  */
 public class CrrceriaCamion extends Carroceria {
+
+    public CrrceriaCamion() {
+        this.setTipo("Camion");
+    }
     
 }
